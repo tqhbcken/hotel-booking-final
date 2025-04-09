@@ -1,0 +1,858 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* CSS cho phần reviews */
+.room-reviews-section {
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+.reviews-container {
+  margin-bottom: 30px;
+}
+
+.reviews-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.average-rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating-number {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.rating-stars {
+  display: flex;
+}
+
+.star {
+  color: #ddd;
+  font-size: 18px;
+  margin-right: 2px;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.total-reviews {
+  margin-left: 10px;
+  color: #666;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-item {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 15px 0;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-author {
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.review-date {
+  color: #888;
+  font-size: 0.85em;
+  margin-left: auto;
+}
+
+.review-comment {
+  line-height: 1.5;
+  color: #333;
+}
+
+.no-reviews {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  text-align: center;
+  color: #666;
+}
+
+/* Form đánh giá */
+.review-form-container {
+  margin-top: 30px;
+}
+
+.review-form {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.review-form .form-group {
+  margin-bottom: 15px;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Sửa lại CSS cho star rating */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star-rating label .star {
+  font-size: 28px;
+  color: #ddd;
+  transition: all 0.2s;
+}
+
+.star-rating input:checked ~ label .star,
+.star-rating input:hover ~ label .star,
+.star-rating label:hover .star {
+  color: #ffc107;
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.submit-review-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submit-review-btn:hover {
+  background-color: #3e8e41;
+}
+
+.submit-review-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.login-to-review {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f0f8ff;
+  border-radius: 5px;
+}
+
+.login-to-review a {
+  color: #0066cc;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Modal xác nhận đặt phòng */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  position: relative;
+}
+
+.confirmation-modal h3 {
+  margin-top: 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eaeaea;
+  color: #333;
+  text-align: center;
+}
+
+.confirmation-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.confirmation-room {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.confirmation-room h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.confirmation-room-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.confirmation-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  border-top: 1px solid #eaeaea;
+  padding-top: 15px;
+}
+
+.user-info h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.info-item.total {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
+}
+
+.info-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.info-value {
+  font-weight: 400;
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.confirm-booking-btn, .cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.confirm-booking-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.confirm-booking-btn:hover {
+  background-color: #3c8c40;
+}
+
+.confirm-booking-btn:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.cancel-btn:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .confirmation-details {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .confirmation-room {
+    flex: 0 0 100%;
+  }
+  
+  .confirmation-info, .user-info {
+    flex: 1;
+  }
+  
+  .confirmation-info {
+    margin-right: 20px;
+  }
+}
+
+/* Loading overlay cho ProtectedRoute */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-size: 18px;
+  color: #333;
+}
+
+.loading-overlay::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  margin-left: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Styles cho trang Booking History */
+.booking-history {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.booking-history h2 {
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+}
+
+.empty-bookings {
+  text-align: center;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.empty-bookings p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.browse-rooms-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.browse-rooms-btn:hover {
+  background-color: #3c8c40;
+}
+
+.bookings-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.booking-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.booking-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.booking-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.booking-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.booking-status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.booking-status.confirmed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.booking-status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.booking-status.completed {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.booking-details {
+  padding: 15px;
+}
+
+.booking-details p {
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.booking-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px 15px;
+  gap: 10px;
+}
+
+.cancel-booking-btn, .view-room-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  flex: 1;
+}
+
+.cancel-booking-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-booking-btn:hover {
+  background-color: #d32f2f;
+}
+
+.view-room-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.view-room-btn:hover {
+  background-color: #0b7dda;
+}
+
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #666;
+}
+
+.loading-indicator::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  margin-left: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .bookings-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Styles cho form đăng ký */
+.register-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.error-message {
+  color: #f44336;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #3c8c40;
+}
+
+.register-btn:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #4caf50;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.register-note {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+.register-note p {
+  margin: 0;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.logo a:hover {
+  color: #0056b3;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+/* User Menu Styles */
+.user-menu {
+  position: relative;
+  margin-left: 0.5rem;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #0056b3;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.user-greeting:hover {
+  background-color: rgba(0, 123, 255, 0.2);
+}
+
+.user-greeting::after {
+  content: '▼';
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.user-menu.active .user-greeting::after {
+  transform: rotate(180deg);
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  width: 200px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-dropdown a,
+.menu-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: #333;
+  font-size: 0.95rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.menu-dropdown a:hover,
+.menu-dropdown button:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+}
+
+.menu-dropdown button {
+  color: #dc3545;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .logo {
+    margin-bottom: 0.8rem;
+  }
+  
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .user-menu {
+    margin-top: 0.5rem;
+  }
+  
+  .menu-dropdown {
+    width: 100%;
+    position: static;
+    margin-top: 0.5rem;
+    box-shadow: none;
+    border: 1px solid #eee;
+  }
+}
+
+/* Thêm styles cho hotel-name và room-info-unavailable */
+.hotel-name {
+  color: #007bff;
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.room-info-unavailable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #666;
+  min-width: 300px;
+  flex: 1;
+}
+
+.room-info-unavailable p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+}
+
+.room-info-unavailable p:first-child {
+  font-weight: 500;
+  color: #dc3545;
+}
+
